@@ -1,0 +1,112 @@
+{% extends 'base.html.j2' %}
+{% block title %}
+    {% if title %}
+        {{ title }} - Apple(Hong Kong)
+    {% else %}
+        {{ _('Welcome to Microblog') }}
+    {% endif %}
+{% endblock %}
+{% block navbar %}
+     <style>
+    .navbar-inverse  svg {
+      fill: currentColor;
+    }
+  </style>
+    <nav class="h-25 navbar  navbar-inverse justify-content-center" style="height: 25%;">
+        <div class="container text-center">
+            <div class="navbar-header">
+                <button type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+               
+                    
+                </a>
+            </div>
+            <div class="collapse navbar-collapse mx-auto" id="bs-example-navbar-collapse-1">
+                <li>
+                <ul class="nav navbar-nav">
+                     <a class="navbar-brand" href="{{ url_for('index') }}">
+                    <svg  width="15px" height="15px" class="d-inline-block align-top" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1">
+                    <path d="M14.94,5.19A4.38,4.38,0,0,0,16,2,4.44,4.44,0,0,0,13,3.52,4.17,4.17,0,0,0,12,6.61,3.69,3.69,0,0,0,14.94,5.19Zm2.52,7.44a4.51,4.51,0,0,1,2.16-3.81,4.66,4.66,0,0,0-3.66-2c-1.56-.16-3,.91-3.83.91s-2-.89-3.3-.87A4.92,4.92,0,0,0,4.69,9.39C2.93,12.45,4.24,17,6,19.47,6.8,20.68,7.8,22.05,9.12,22s1.75-.82,3.28-.82,2,.82,3.3.79,2.22-1.24,3.06-2.45a11,11,0,0,0,1.38-2.85A4.41,4.41,0,0,1,17.46,12.63Z"/>
+                    </svg>
+                </a>
+                </li>
+                    <li>
+                        <a href="{{ url_for('index') }}">{{ _('Store') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('explore') }}">{{ _('Mac') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('index') }}">{{ _('iPad') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('explore') }}">{{ _('iPhone') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('index') }}">{{ _('Watch') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('explore') }}">{{ _('AirPods') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('index') }}">{{ _('Store') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('explore') }}">{{ _('Mac') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('index') }}">{{ _('Store') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('explore') }}">{{ _('Mac') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('explore') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="20px" viewBox="0 10 15 20">
+                        <path d="M14.298,27.202l-3.87-3.87c0.701-0.929,1.122-2.081,1.122-3.332c0-3.06-2.489-5.55-5.55-5.55c-3.06,0-5.55,2.49-5.55,5.55 c0,3.061,2.49,5.55,5.55,5.55c1.251,0,2.403-0.421,3.332-1.122l3.87,3.87c0.151,0.151,0.35,0.228,0.548,0.228 s0.396-0.076,0.548-0.228C14.601,27.995,14.601,27.505,14.298,27.202z M1.55,20c0-2.454,1.997-4.45,4.45-4.45 c2.454,0,4.45,1.997,4.45,4.45S8.454,24.45,6,24.45C3.546,24.45,1.55,22.454,1.55,20z"></path>
+                        </svg>
+                        </a>
+                    </li>
+                </ul>
+                
+                    {% if current_user.is_anonymous %}
+                        
+                    {% else %}
+                        <li>
+                            <a href="{{ url_for('user', username=current_user.username) }}">{{ _('Profile') }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('logout') }}">{{ _('Logout') }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block content %}
+    <div class="container ">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}<div class="alert alert-info" role="alert">{{ message }}</div>{% endfor %}
+            {% endif %}
+        {% endwith %}
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %} {% endblock %}
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+    {{ moment.lang(g.locale) }}
+{% endblock %}
+
+<!-- 利用宏 render_nav_item 创建菜单 -->
+                    {{ render_nav_item('index', '首页', use_li=True) }}
